@@ -272,8 +272,14 @@ class ClassContentController extends AbstractRestController
      */
     public function putCollectionAction(Request $request)
     {
+        $params = $request->request->all();
+        
         $result = [];
-        foreach ($request->request->all() as $data) {
+        foreach ($params as $data) {
+            if (isset($data['update_date'])) {
+                continue;
+            }
+            
             if (!isset($data['type']) || !isset($data['uid'])) {
                 throw new BadRequestHttpException("type and/or uid is missing.");
             }
